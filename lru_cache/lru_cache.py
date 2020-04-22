@@ -24,16 +24,9 @@ class LRUCache:
         if key not in self.storage_dict:
             return None
         else:
-            value = self.storage_dict[key]
-            curr_node = self.dll_cache.head
-            while(curr_node is not None):
-                if curr_node.value[0] == key:
-                    node = curr_node
-                    self.dll_cache.move_to_front(node)
-                    curr_node = curr_node.next
-                else:
-                    curr_node = curr_node.next
-            return value
+            node = self.storage_dict[key]
+            self.dll_cache.move_to_front(node)
+            return node.value[1]
 
 
     """
@@ -46,29 +39,48 @@ class LRUCache:
     want to overwrite the old value associated with the key with
     the newly-specified value.
     """
+    # def set(self, key, value):
+    #     if key in self.storage_dict:
+    #         curr_node = self.dll_cache.head
+    #         while(curr_node is not None):
+    #             if curr_node.value[0] == key:
+    #                 self.dll_cache.delete(curr_node)
+    #                 curr_node = curr_node.next
+    #             else:
+    #                 curr_node = curr_node.next
+    #         self.dll_cache.add_to_head((key, value))
+    #         self.storage_dict[key] = value
+    #     elif self.size < self.limit:
+    #         self.size += 1
+    #         ##add to head (key, value)
+    #         self.dll_cache.add_to_head((key, value))
+    #         ##add to dictionary
+    #         self.storage_dict[key] = value
+    #     elif self.size == self.limit: 
+    #         oldest_key = self.dll_cache.tail.value[0]
+    #         self.storage_dict.pop(oldest_key)
+    #         self.dll_cache.remove_from_tail()
+    #         self.dll_cache.add_to_head((key, value))
+    #         self.storage_dict[key] = value
+
     def set(self, key, value):
         if key in self.storage_dict:
-            curr_node = self.dll_cache.head
-            while(curr_node is not None):
-                if curr_node.value[0] == key:
-                    self.dll_cache.delete(curr_node)
-                    curr_node = curr_node.next
-                else:
-                    curr_node = curr_node.next
+            node = self.storage_dict[key]
+            self.dll_cache.delete(node)
             self.dll_cache.add_to_head((key, value))
-            self.storage_dict[key] = value
+            self.storage_dict[key] = self.dll_cache.head
         elif self.size < self.limit:
             self.size += 1
             ##add to head (key, value)
             self.dll_cache.add_to_head((key, value))
             ##add to dictionary
-            self.storage_dict[key] = value
+            self.storage_dict[key] = self.dll_cache.head
         elif self.size == self.limit: 
             oldest_key = self.dll_cache.tail.value[0]
             self.storage_dict.pop(oldest_key)
             self.dll_cache.remove_from_tail()
             self.dll_cache.add_to_head((key, value))
-            self.storage_dict[key] = value
+            self.storage_dict[key] = self.dll_cache.head  
 
 
     
@@ -96,7 +108,7 @@ print(attempt.size)
 print(attempt.storage_dict)
 print("Head", attempt.dll_cache.head.value)
 print("Tail", attempt.dll_cache.tail.value)
-attempt.get('item2')
+print("Get item2", attempt.get('item2'))
 print(attempt.size)
 print(attempt.storage_dict)
 print("Head", attempt.dll_cache.head.value)
