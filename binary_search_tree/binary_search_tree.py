@@ -2,7 +2,9 @@
 # sys.path.append('../queue_and_stack')
 # from dll_queue import Queue
 # from dll_stack import Stack
-
+def cb(value):
+    result = value + 2
+    return result
 
 class BinarySearchTree:
     def __init__(self, value):
@@ -52,11 +54,16 @@ class BinarySearchTree:
             else:
                 return self.value
 
-
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        if self:
+            cb(self.value)
+        if self.left:
+            self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
+        
 
     # DAY 2 Project -----------------------
 
@@ -94,3 +101,7 @@ bst.insert(3)
 bst.insert(9)
 bst.insert(4)
 print(bst.get_max())
+
+
+
+print(bst.for_each(cb))
