@@ -66,9 +66,14 @@ class LRUCache:
     def set(self, key, value):
         if key in self.storage_dict:
             node = self.storage_dict[key]
-            self.dll_cache.delete(node)
-            self.dll_cache.add_to_head((key, value))
-            self.storage_dict[key] = self.dll_cache.head
+            # self.dll_cache.delete(node)
+            # self.dll_cache.add_to_head((key, value))
+            # self.storage_dict[key] = self.dll_cache.head
+            ##SEAN's MORE EFFICIENT STEPS
+            #overwrite the old value
+            node.value = (key, value)
+            #move this node to the front/head
+            self.dll_cache.move_to_front(node)
         elif self.size < self.limit:
             self.size += 1
             ##add to head (key, value)
@@ -78,6 +83,9 @@ class LRUCache:
         elif self.size == self.limit: 
             oldest_key = self.dll_cache.tail.value[0]
             self.storage_dict.pop(oldest_key)
+            #OR 
+            #del self.storage_dict[oldest_key]
+            # instead of using pop
             self.dll_cache.remove_from_tail()
             self.dll_cache.add_to_head((key, value))
             self.storage_dict[key] = self.dll_cache.head  
