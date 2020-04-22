@@ -83,9 +83,8 @@ class LRUCache:
         elif self.size == self.limit: 
             oldest_key = self.dll_cache.tail.value[0]
             self.storage_dict.pop(oldest_key)
-            #OR 
-            #del self.storage_dict[oldest_key]
-            # instead of using pop
+            #OR instead of using pop
+            #del self.storage_dict[oldest_key] 
             self.dll_cache.remove_from_tail()
             self.dll_cache.add_to_head((key, value))
             self.storage_dict[key] = self.dll_cache.head  
