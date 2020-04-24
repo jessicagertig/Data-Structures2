@@ -83,10 +83,8 @@ class BinarySearchTree:
         q = Queue()
         q.enqueue(node)
 
-        while node is not None:
+        while q.len() > 0:
             node = q.dequeue()
-            if node is None:
-                break
             print(node.value)
             if node.right:
                 q.enqueue(node.right)
@@ -99,10 +97,8 @@ class BinarySearchTree:
         s = Stack()
         s.push(node)
 
-        while node is not None:
+        while s.len() > 0:
             node = s.pop()
-            if node is None:
-                break
             print(node.value)
             if node.right:
                 s.push(node.right)
@@ -120,12 +116,20 @@ class BinarySearchTree:
     def post_order_dft(self, node):
         pass
 
-bst = BinarySearchTree(7)
-bst.insert(5)
+# bst = BinarySearchTree(7)
+# bst.insert(5)
+# bst.insert(8)
+# bst.insert(10)
+# bst.insert(3)
+# bst.insert(9)
+# bst.insert(4)
+bst = BinarySearchTree(1)
 bst.insert(8)
-bst.insert(10)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
 bst.insert(3)
-bst.insert(9)
 bst.insert(4)
+bst.insert(2)
 
 bst.dft_print(bst)
