@@ -1,5 +1,4 @@
-import sys
-sys.path.append('../doubly_linked_list')
+
 from doubly_linked_list import DoublyLinkedList
 
 
@@ -18,6 +17,10 @@ class Queue:
         if self.size > 0:
             self.size -= 1
             return self.storage.remove_from_tail()
+
+    ##front is the tail as you dequeue from the end of a line
+    def find_front(self):
+        return self.storage.tail
 
     def len(self):
         return self.size
